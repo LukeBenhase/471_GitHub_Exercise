@@ -205,6 +205,23 @@ printhelp(BSTNode<Key, E>* root, int level) const {
   printhelp(root->right(), level+1);  // Do right subtree
 }
 
+void printPostOrder() const {
+    if (root == NULL) {
+        cout << "The BST is empty.\n";
+        return;
+    }
+
+    // Use a lambda for recursion inside the function
+    function<void(BSTNode<Key, E>*)> postOrder = [&](BSTNode<Key, E>* node) {
+        if (node == NULL) return;
+        postOrder(node->left());
+        postOrder(node->right());
+        visit(node); // Print the node
+        };
+
+    postOrder(root);
+}
+
 template <typename Key, typename E>
 void BST<Key, E>::
 printPreOrder(BSTNode<Key, E>* root, int level) const {
